@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>çarpma soruları</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="yenilogo.png" type="image/x-icon">
+  </head>
+  <body>
+    <h1 id="title-h1">çarpma soruları soran</h1>
+    <article>
+        <div id="question"></div>
+        <input type="text" id="answer-input" placeholder="cevabı buraya yazınız">
+    </article>
+    <script>
+        // Global variables
+        var questions;
+        var score = 0;
+        var currentQuestion = 0;
+
+        // Function to generate random questions
+        function generateQuestions() {
+        questions = [];
+        for (var i = 0; i < 20; i++) {
+            var x = Math.floor(Math.random() * 10) + 1;
+            var y = Math.floor(Math.random() * 10) + 1;
+            var question = x + " x " + y + " = ?";
+            var answer = x * y;
+            questions.push({ question: question, answer: answer });
+        }
+        }
+
+        // Function to check the answer
+        function checkAnswer(answer) {
+        if (answer == questions[currentQuestion].answer) {
+            score += 5;
+            alert("Correct!");
+        } else {
+            alert("Wrong!");
+        }
+        currentQuestion++;
+        if (currentQuestion == questions.length) {
+            var finalScore = score / 20 * 100;
+            document.title = "Score: " + finalScore + "%";
+            alert("Quiz finished. Your final score is " + finalScore + "%");
+        } else {
+            document.getElementById("question").innerHTML = questions[currentQuestion].question;
+            document.getElementById("answer-input").value = "";
+        }
+        }
+
+        // Event listener to check for 'Enter' key press
+        document.addEventListener("keypress", function(event) {
+        if (event.keyCode === 13) {
+            checkAnswer(parseInt(event.target.value));
+        }
+        });
+
+        // Generate questions and display the first one
+        generateQuestions();
+        document.getElementById("question").innerHTML = questions[0].question;
+    </script>
+  </body>
+</html>
